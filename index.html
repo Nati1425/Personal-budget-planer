@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የበጀት እቅድ አውጪ</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json"> 
+    <meta name="theme-color" content="#337ab7"/> 
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="የበጀት እቅድ">
+    <link rel="apple-touch-icon" href="icon-192x192.png"> 
+</head>
+<body>
+    <div class="container">
+        <button id="installAppButton" style="display:none; margin-bottom: 15px; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; width:100%;">መተግበሪያውን ጫን</button>
+
+        <h1>የእኔ የበጀት እቅድ አውጪ</h1>
+
+        <!-- Main Input Form for Ad-hoc Transactions -->
+        <form id="addTransactionItemForm">
+            <h2>አዲስ የገቢ/ወጪ ንጥል ጨምር</h2>
+            <div>
+                <label for="itemType">ዓይነት:</label>
+                <select id="itemType">
+                    <option value="income">ገቢ</option>
+                    <option value="expense">ወጪ</option>
+                </select>
+            </div>
+            <div>
+                <label for="itemDescription">መግለጫ:</label>
+                <input type="text" id="itemDescription" placeholder="ለምሳሌ: ያልተጠበቀ ወጪ" required>
+            </div>
+            <div>
+                <label for="itemAmount">መጠን (ETB):</label>
+                <input type="number" id="itemAmount" placeholder="ለምሳሌ: 500.00" step="0.01" required>
+            </div>
+            <div>
+                <label for="itemEthiopianMonth_transaction">የኢትዮጵያ ወር (አማራጭ):</label>
+                <select id="itemEthiopianMonth_transaction">
+                    <option value="">-- ወር ይምረጡ --</option>
+                    <option value="Mäskäräm">መስከረም</option><option value="Ṭəqəmt">ጥቅምት</option><option value="Ḫədar">ኅዳር</option><option value="Taḫśaś">ታኅሣሥ</option><option value="Ṭərr">ጥር</option><option value="Yäkatit">የካቲት</option><option value="Mägabit">መጋቢት</option><option value="Miyazya">ሚያዝያ</option><option value="Gənbo">ግንቦት</option><option value="Säne">ሰኔ</option><option value="Ḥamle">ሐምሌ</option><option value="Nähase">ነሐሴ</option><option value="Pagume">ጳጉሜ</option>
+                </select>
+            </div>
+            <button type="submit">እንደ ትክክለኛ ጨምር</button>
+        </form>
+
+        <hr class="section-divider">
+
+        <!-- My Reminders Section -->
+        <div class="my-reminders-section">
+            <h2>የእኔ ማስታወሻዎች (ግምቶች)</h2>
+            <form id="addReminderForm">
+                <h3>አዲስ ማስታወሻ ጨምር</h3>
+                <div>
+                    <label for="reminderType">የማስታወሻ ዓይነት:</label>
+                    <select id="reminderType">
+                        <option value="income">የሚጠበቅ ገቢ</option>
+                        <option value="expense">የሚጠበቅ ወጪ</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="reminderDescription">የማስታወሻ መግለጫ:</label>
+                    <input type="text" id="reminderDescription" placeholder="ለምሳሌ: የት/ቤት ክፍያ ግምት" required>
+                </div>
+                <div>
+                    <label for="reminderAmount">የሚገመተው መጠን (ETB):</label>
+                    <input type="number" id="reminderAmount" placeholder="ለምሳሌ: 3000" step="0.01" required>
+                </div>
+                <div>
+                    <label for="reminderEthiopianMonth">የማስታወሻ ወር (አማራጭ):</label>
+                    <select id="reminderEthiopianMonth">
+                        <option value="">-- ወር ይምረጡ --</option>
+                        <option value="Mäskäräm">መስከረም</option><option value="Ṭəqəmt">ጥቅምት</option><option value="Ḫədar">ኅዳር</option><option value="Taḫśaś">ታኅሣሥ</option><option value="Ṭərr">ጥር</option><option value="Yäkatit">የካቲት</option><option value="Mägabit">መጋቢት</option><option value="Miyazya">ሚያዝያ</option><option value="Gənbo">ግንቦት</option><option value="Säne">ሰኔ</option><option value="Ḥamle">ሐምሌ</option><option value="Nähase">ነሐሴ</option><option value="Pagume">ጳጉሜ</option>
+                    </select>
+                </div>
+                <button type="submit">ማስታወሻ አስቀምጥ</button>
+            </form>
+
+            <div class="reminder-summary">
+                <p>ጠቅላላ የሚጠበቅ ገቢ: <span id="totalExpectedIncome">0.00</span> ETB</p>
+                <p>ጠቅላላ የሚጠበቅ ወጪ: <span id="totalExpectedExpense">0.00</span> ETB</p>
+            </div>
+
+            <div class="reminder-list-container">
+                <h3>የተቀመጡ ማስታወሻዎቼ</h3>
+                <ul id="userReminderList"></ul>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Display Sections for Actual Transactions -->
+        <div class="budget-overview">
+            <div class="income-section">
+                <h2>ትክክለኛ ገቢዎች</h2>
+                <ul id="incomeList"></ul>
+                <p>ጠቅላላ ገቢ: <span id="totalIncome">0.00</span> ETB</p>
+            </div>
+            <div class="expense-section">
+                <h2>ትክክለኛ ወጪዎች</h2>
+                <ul id="expenseList"></ul>
+                <p>ጠቅላላ ወጪዎች: <span id="totalExpenses">0.00</span> ETB</p>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h2>ማጠቃለያ</h2>
+            <p>ቀሪ ሂሳብ: <span id="balance" class="balance-positive">0.00 ETB</span></p>
+            <button id="clearTransactionsButton">ሁሉንም ትክክለኛ ውሂብ አጽዳ</button>
+            <button id="clearRemindersButton">ሁሉንም ማስታወሻዎች አጽዳ</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
